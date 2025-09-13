@@ -69,7 +69,7 @@ Copy code
 python app.py
 By default, it starts at http://127.0.0.1:5000/.
 
-💻 Usage
+##💻 Usage
 Open the app in your browser:
 👉 http://127.0.0.1:5000/
 
@@ -100,7 +100,7 @@ ApplicationNumber
 9876543210
 
 1122334455
-⚠️ Notes
+##⚠️ Notes
 This project interacts with official WB government servers.
 
 Availability depends on server uptime and response.
@@ -109,14 +109,14 @@ Use responsibly for legitimate purposes only.
 
 Debug mode is enabled (debug=True). Disable it in production.
 
-🛠️ Troubleshooting
+##🛠️ Troubleshooting
 SSL/TLS errors:
 The app uses a custom SSLAdapter to support legacy TLS servers. If you face issues, update requests and urllib3.
 
 Timeouts:
 Some requests may take longer if the server is busy. Default timeout is 15 seconds.
 
-📜 License
+##📜 License
 This project is for educational and personal use only.
 Not affiliated with the Government of West Bengal.
 
