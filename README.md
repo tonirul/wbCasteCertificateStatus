@@ -94,8 +94,11 @@ Your .csv file should look like this:
 csv
 Copy code
 ApplicationNumber
+
 1234567890
+
 9876543210
+
 1122334455
 ⚠️ Notes
 This project interacts with official WB government servers.
