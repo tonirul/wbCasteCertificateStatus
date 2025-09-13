@@ -30,7 +30,7 @@ project/
 │── README.md # Documentation
 
 yaml
-Copy code
+ 
 
 ---
 
@@ -52,20 +52,20 @@ Copy code
 (Optional) Create a virtual environment.
 
 bash
-Copy code
+ 
 python -m venv venv
 source venv/bin/activate    # Linux/Mac
 venv\Scripts\activate       # Windows
 Install dependencies.
 
 bash
-Copy code
+ 
 pip install flask requests
 ▶️ Running the App
 Run the Flask server:
 
 bash
-Copy code
+ 
 python app.py
 By default, it starts at http://127.0.0.1:5000/.
 
@@ -92,7 +92,7 @@ Clicking it downloads the PDF certificate.
 Your .csv file should look like this:
 
 csv
-Copy code
+ 
 ApplicationNumber
 
 1234567890
