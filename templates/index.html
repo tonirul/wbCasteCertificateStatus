@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WB Caste Certificate Status Checker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #EDF9EB, #D6F6D5, #BFF4BE);
+            background-repeat: no-repeat; /* Prevents the gradient from repeating */
+  background-attachment: fixed; /* Ensures the background stays fixed during scrolling */
+  min-height: 100vh; /* Ensures the element covers at least the full viewport height */
+  margin: 0; /* Removes default body margin */
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2d6a4f;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        textarea, input[type=file], input[type=text], button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #aaa;
+            font-size: 15px;
+        }
+        button {
+            background: #2d6a4f;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        button:hover { background: #40916c; }
+
+        .search-box {
+            margin: 20px 0;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #aaa;
+            font-size: 15px;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .card {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            width: 300px;
+            box-sizing: border-box;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #1b4332;
+            font-size: 1.4em;
+        }
+        .card p {
+            margin: 8px 0;
+            color: #333;
+            font-size: 14.5px;
+        }
+        .status-dot {
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .card { width: 45%; }
+        }
+        @media (max-width: 600px) {
+            .card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>WB Caste Certificate Status Checker</h1>
+
+    <!-- Input form -->
+    <form method="POST" enctype="multipart/form-data">
+        <label>Enter Application Numbers (one per line):</label>
+        <textarea name="app_numbers" rows="5" placeholder="e.g., OBCWB08022025/747"></textarea>
+
+        <label>Or Upload CSV file:</label>
+        <input type="file" name="csv_file" accept=".csv">
+
+        <button type="submit">Check Status</button>
+    </form>
+
+    {% if results %}
+    <!-- Search by name -->
+    <input type="text" class="search-box" id="nameSearch" placeholder="Search by applicant name..." onkeyup="filterCards()">
+
+    <!-- Cards -->
+    <div class="cards" id="cardsContainer">
+        {% for r in results %}
+        <div class="card">
+            <h3>{{ r.applname or "-" }}</h3>
+             <p><strong>Father's Name:</strong> {{ r.fathersname }}</p>
+	     <p><strong>Applied On:</strong> {{ r.appldt }}</p>
+            <p><strong>Application ID:</strong> {{ r.applid }}</p>
+            <p><strong>Caste:</strong> {{ r.casteid or "-" }}</p>
+            <p>
+                <strong>Status:</strong>
+                <span class="status-dot" 
+                      style="background-color: 
+                      {% if 'Approved' in r.status_desc %}green
+                      {% elif 'No record' in r.status_desc %}red
+                      {% elif 'Under process' in r.status_desc %}blue
+                      {% else %}gray{% endif %};">
+                </span>
+                {{ r.status_desc }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function filterCards() {
+            const input = document.getElementById('nameSearch').value.toLowerCase();
+            const cards = document.getElementById('cardsContainer').getElementsByClassName('card');
+            for (let i = 0; i < cards.length; i++) {
+                const name = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                if (name.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    {% endif %}
+</div>
+</body>
+</html>
